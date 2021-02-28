@@ -15,25 +15,24 @@ pipeline{
                 branch 'master'
             }
             steps {
-                
-                    sshPublisher(
-                        failOnError: true,
-                        continueOnError: false,
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'staging',
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: 'dist/trainSchedule.zip',
-                                        removePrefix: 'dist/',
-                                        remoteDirectory: '/tmp',
-                                        // execCommand: "sudo /usr/bin/systemctl stop train-schedule && rm -rf /opt/train-schedule/* && sudo unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo /usr/bin/systemctl start train-schedule"
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                
+                sshPublisher(
+                    failOnError: true,
+                    continueOnError: false,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'staging',
+                            verbose: true,
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: 'dist/trainSchedule.zip',
+                                    removePrefix: 'dist/',
+                                    remoteDirectory: '/tmp',
+                                    execCommand: "sudo /usr/bin/systemctl stop train-schedule && rm -rf /opt/train-schedule/* && sudo unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo /usr/bin/systemctl start train-schedule"
+                                )
+                            ]
+                        )
+                    ]
+                )
             }
         }
     }
