@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        userId = "${env.UID}";
+    } 
     stages{
         stage("Build"){
             steps{
@@ -16,7 +19,7 @@ pipeline {
 
             steps {
                 script {
-                    sh id
+                    echo "${userId}"
                     app = docker.build("zforman/train-schedule")
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
