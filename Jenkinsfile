@@ -19,6 +19,7 @@ pipeline {
 
             steps {
                 echo 'Building Docker Image'
+                sh 'docker info'
                 script {
                     app = docker.build("zforman/train-schedule")
                     app.inside {
