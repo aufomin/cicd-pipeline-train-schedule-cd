@@ -16,6 +16,7 @@ pipeline {
 
             steps {
                 script {
+                    id
                     app = docker.build("zforman/train-schedule")
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
