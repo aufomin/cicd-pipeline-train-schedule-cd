@@ -1,11 +1,10 @@
 pipeline {
     agent any
-    environment {
-        userId = "${env.UID}";
-    } 
+    
     stages{
         stage("Build"){
             steps{
+                sh 'docker info'
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
@@ -19,7 +18,6 @@ pipeline {
 
             steps {
                 echo 'Building Docker Image'
-                sh 'docker info'
                 script {
                     app = docker.build("zforman/train-schedule")
                     app.inside {
