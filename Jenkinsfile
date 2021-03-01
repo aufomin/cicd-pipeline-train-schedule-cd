@@ -6,8 +6,6 @@ pipeline {
     stages{
         stage("Build"){
             steps{
-                echo "${userId}"
-                sh 'id'
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
@@ -20,7 +18,7 @@ pipeline {
             }
 
             steps {
-                
+                echo 'Building Docker Image'
                 script {
                     app = docker.build("zforman/train-schedule")
                     app.inside {
