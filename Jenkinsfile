@@ -73,7 +73,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login_ssh', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_id \"docker pull zforman/train-schedule:${env.BUILD_NUMBER}\""
                         try {
